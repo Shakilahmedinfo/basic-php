@@ -50,24 +50,20 @@ Operators and Expressions
 
 //echo "This is the  value : ".$Value;
 
-//ray = [ 20, 40 , 50]
-
 
 //3. Comparison with switch  ---------------------------->
-
-// loop 
-
-//$value1 = 40;
-// $value2 = "20";
-// $value3 = 60 ;
-
-
-
-// var_dump($value1 == $value2 ) False
-// var_dump($value1 ===$value2 ) False
-//var_dump($value1 != $value2 ) True 
-
 /*
+
+$value1 = 20;
+$value2 = "20";
+$value3 = 60 ;
+
+
+
+//var_dump( $value1 == $value2 ) //True 
+//var_dump($value1 === $value2 ) //False
+var_dump($value1 != $value3 ) // True 
+
 $Meal=10;
 switch($Meal){
     case $Meal == 5 : echo("The Meal is Equal");
@@ -156,16 +152,6 @@ echo $color."<br>";
 
 */
 
-
-$value1 = 20;
-$value2 = "20";
-$value3 = 60 ;
-
-
-
-//var_dump( $value1 == $value2 ) //True 
-//var_dump($value1 === $value2 ) //False
-var_dump($value1 != $value3 ) // True 
 
 
 	
