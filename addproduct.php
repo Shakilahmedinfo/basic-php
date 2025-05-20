@@ -10,17 +10,20 @@
 
 <body>
 
-  <div class="form-container">
+<?php include_once("insertproduct.php"); ?>
+
+
+  <div  class="form-container">
     <h2>Add New Product</h2>
     <form action="insertproduct.php" method="POST">
       <label for="name">Product Name</label>
-      <input type="text" name="nameP" id="name" >
+      <input type="text" name="ProductName" id="name" >
 
       <label for="price">Price ($)</label>
       <input type="number" name="Price" id="price" step="0.01" >
       
       <label for="name">Short Description </label>
-      <input type="text" name="name" id="SrtD" >
+      <input type="text" name="SrtD" >
 
       <label for="name">Categories </label>
       <input type="text" name="catg"id="name" >
@@ -35,22 +38,31 @@
     </form>
   </div>
 
+  <br>
 
+    <div class="container">
 
-  <div class="container">
-  <?php if($result->num_rows = o): ?>
-        <?php while ($row = $result->fetch_assoc())  ?>
+<?php 
+if(mysqli_num_rows($result) > 0){
+  while ($row = mysqli_fetch_assoc($result)) { ?>
+
     <div class="card">
-      <img src="jeans3.jpg" alt="Denim Jeans">
-      <h1><?php echo $row['nameP'];?></h1>
-      <p class="price">$19.99</p>
-      <p>High-quality denim with perfect fit and comfort.</p>
-      <p><button>Add to Cart</button></p>
+      <img src="<?php  echo $row['Image'] ?>" alt="Denim Jeans" >
+      <h1><?php  echo $row['ProductName'] ?></h1>
+      <p class="price"><?php  echo $row['Categories'] ?></p>
+      <p class="price"><?php  echo $row['Price'] ?></p>
+      <p><?php  echo $row['Shortdescription'] ?></p>
+      <p><button> Delete Product </button><button>Update Product </button></p>
     </div>
 
-  <?php endwhile; ?>
-  <?php endif; ?>
+
+<?php 
+}
+}
+
+?>
   </div>
+
 
 </body>
 </html>

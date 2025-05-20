@@ -1,8 +1,5 @@
 <?php 
 
- header("Location: addproduct.php");
-
-
 $host = "localhost";
 $dbUsername = "root";
 $dbPassword = ""; 
@@ -26,9 +23,9 @@ function  clean_data($data){
 
 }
 
-$error=[];
+$error =[];
 
-$nameP = !empty($_POST["nameP"]) ? clean_data($_POST["nameP"]) : '';
+$ProductName = !empty($_POST["ProductName"]) ? clean_data($_POST["ProductName"]) : NULL;
 $Price = !empty($_POST["Price"]) ? clean_data($_POST["Price"]): '';
 $catg = !empty($_POST["catg"]) ? clean_data($_POST["catg"]): '';
 $imageUrl =  !empty($_POST["imageUrl"]) ? clean_data($_POST["imageUrl"]): '';
@@ -36,25 +33,72 @@ $SrtD = !empty($_POST["SrtD"]) ? clean_data($_POST["SrtD"]): '';
 $fulldesc = !empty($_POST["fulldesc"]) ? clean_data($_POST["fulldesc"]): '';
 
 
+if(empty($ProductName)){
 
-$sql = "INSERT INTO `producttable` (`ProductName`, `Price`, `Categories`, `Image`, `Shortdescription`, `Fulldescription`)
-            VALUES ('$nameP', '$Price', '$catg', '$imageUrl', '$SrtD', '$fulldesc')";
+   $error[]= "The Product name is Required ";
+
+}
+if(empty($Price)){
+
+   $error[]= "The Product name is Required ";
+
+
+}
+if(empty($catg)){
+
+   $error[]= "The Product name is Required ";
+
+
+}
+
+
+if(empty($SrtD)){
+
+   $error[]= "The Product name is Required ";
+
+
+
+
+}
+if(empty($fulldesc)){
+
+   $error[]= "The Product name is Required ";
+
+}
+
+
+// echo "<Pre>";
+// print_r($error);
+
+
+
+
+
+
+   
+if (count($error) == 0) {
+
+     $sql = "INSERT INTO `producttable` (`ProductName`, `Price`, `Categories`, `Image`, `Shortdescription`, `Fulldescription`)
+            VALUES ('$ProductName', '$Price', '$catg', '$imageUrl', '$SrtD', '$fulldesc')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New product inserted successfully.";
     } else {
         echo "Error: " . $conn->error;
     }
+
+}
+   
+
+
+
+
+
     
-$sql = "SELECT * FROM producttable";
+
+$sql = "SELECT * FROM `producttable`";
+
 $result = $conn->query($sql);
-
-echo $result;
-
-echo "<pre>";
- print_r($result);
- die();
-
 
 
 
