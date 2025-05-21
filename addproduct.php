@@ -4,65 +4,56 @@
   <meta charset="UTF-8">
   <title>Add New Product</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
- <link rel="stylesheet" href="assets/css/addform.css">
- <link rel="stylesheet" href="assets/css/productmanagement.css">
-
-
+  <link rel="stylesheet" href="assets/css/addform.css">
+  <link rel="stylesheet" href="assets/css/productmanagement.css">
+</head>
 <body>
 
 <?php include_once("insertproduct.php"); ?>
 
+<div class="form-container">
+  <h2>Add New Product</h2>
+  <form action="addproduct.php" method="POST" enctype="multipart/form-data">
+    <label for="ProductName">Product Name</label>
+    <input type="text" name="ProductName" id="ProductName" required>
 
-  <div  class="form-container">
-    <h2>Add New Product</h2>
-    <form action="insertproduct.php" method="POST">
-      <label for="name">Product Name</label>
-      <input type="text" name="ProductName" id="name" >
+    <label for="Price">Price ($)</label>
+    <input type="number" name="Price" id="Price" required step="0.01">
 
-      <label for="price">Price ($)</label>
-      <input type="number" name="Price" id="price" step="0.01" >
-      
-      <label for="name">Short Description </label>
-      <input type="text" name="SrtD" >
+    <label for="SrtD">Short Description</label>
+    <input type="text" name="SrtD" id="SrtD">
 
-      <label for="name">Categories </label>
-      <input type="text" name="catg"id="name" >
+    <label for="catg">Categories</label>
+    <input type="text" name="catg" id="catg">
 
-      <label for="shortdesc">Full Description</label>
-      <textarea name="fulldesc" id="shortdesc" rows="4" ></textarea>
+    <label for="fulldesc">Full Description</label>
+    <textarea name="fulldesc" id="fulldesc" rows="4"></textarea>
 
-      <label for="image">Product Image</label>
-      <input type="file" name="imageUrl" id="image" > 
+      <label for="imageUrl">Product Image</label>
+    <input type="file" name="imageUrl" id="imageUrl" required>
 
-      <button type="submit">Add Product</button>
-    </form>
-  </div>
+    <button type="submit">Add Product</button>
+  </form>
+</div>
 
-  <br>
+<br>
 
-    <div class="container">
-
-<?php 
-if(mysqli_num_rows($result) > 0){
-  while ($row = mysqli_fetch_assoc($result)) { ?>
-
-    <div class="card">
-      <img src="<?php  echo $row['Image'] ?>" alt="Denim Jeans" >
-      <h1><?php  echo $row['ProductName'] ?></h1>
-      <p class="price"><?php  echo $row['Categories'] ?></p>
-      <p class="price"><?php  echo $row['Price'] ?></p>
-      <p><?php  echo $row['Shortdescription'] ?></p>
-      <p><button> Delete Product </button><button>Update Product </button></p>
-    </div>
-
-
-<?php 
-}
-}
-
-?>
-  </div>
-
+<div class="container">
+  <?php 
+  if ($result && mysqli_num_rows($result) > 0) {
+    while ($row = mysqli_fetch_assoc($result)) { ?>
+      <div class="card">
+        <img src="<?php echo $row['Image']; ?>" alt="Product Image" width="200">
+        <h1><?php echo $row['ProductName']; ?></h1>
+        <p class="price"><?php echo $row['Categories']; ?></p>
+        <p class="price">$<?php echo $row['Price']; ?></p>
+        <p><?php echo $row['Shortdescription']; ?></p>
+        <p><button>Delete</button> <button>Update </button></p>
+      </div>
+  <?php } } else {
+    echo "<p>No products found.</p>";
+  } ?>
+</div>
 
 </body>
 </html>
