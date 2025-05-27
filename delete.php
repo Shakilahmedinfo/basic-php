@@ -12,7 +12,7 @@ $result=mysqli_query ($conn, $sql);
 
 
 if($result== true){
-    header('location:addproduct.php');
+    header('location:index.php');
     
 }else{
     echo "Error deleting record: " . mysqli_error($conn);
