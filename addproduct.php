@@ -1,12 +1,8 @@
-<?php include("config.php"); 
+
+<?php include("config.php");
 
 
-$id = $_GET['id'];
 
-$sql = "SELECT * FROM `producttable` WHERE  SL=$id";
-$result= mysqli_query($conn , $sql);
-$data= mysqli_fetch_all($result , MYSQLI_ASSOC);
-$row= $data[0];
 
 function  clean_data($data){
 
@@ -19,6 +15,7 @@ $Price = !empty($_POST["Price"]) ? clean_data($_POST["Price"]): '';
 $catg = !empty($_POST["catg"]) ? clean_data($_POST["catg"]): '';
 $SrtD = !empty($_POST["SrtD"]) ? clean_data($_POST["SrtD"]): '';
 $fulldesc = !empty($_POST["fulldesc"]) ? clean_data($_POST["fulldesc"]): '';
+
 
 // Handle file upload
  // File upload setup
@@ -34,21 +31,23 @@ $fulldesc = !empty($_POST["fulldesc"]) ? clean_data($_POST["fulldesc"]): '';
         move_uploaded_file($_FILES["imageUrl"]["tmp_name"], $imagePath);
     }
 
+
+
+
+
+
 $error =[];
+   
 
 
-if(empty($Price)){
-
-   $error[]= "The Product price is Required ";
 
 
-}
 if(empty($catg)){
 
    $error[]= "The Product categories is Required ";
 
 
-} 
+}
 
 
 if(empty($SrtD)){
@@ -63,36 +62,32 @@ if(empty($fulldesc)){
 
    $error[]= "The Product fulldescription  is Required ";
 
-}   
-
-
+}    
 
 
 if (count($error) == 0) {
 
- $sql = "UPDATE producttable  SET ProductName = '$ProductName', Price = '$Price', Categories = '$catg', Image='$imagePath', Shortdescription= '$SrtD' , Fulldescription ='$fulldesc'
-            WHERE SL = $id";
+     $sql = "INSERT INTO `producttable` (`ProductName`, `Price`, `Categories`, `Image`, `Shortdescription`, `Fulldescription`)
+            VALUES ('$ProductName', '$Price', '$catg', '$imagePath', '$SrtD', '$fulldesc')";
 
-    if ($conn->query($sql) === TRUE) {
-
-         header('location:index.php');
+    if (mysqli_query($conn, $sql)) {
+      echo "The code perfect done";
 
     } else {
-        echo "Error updating book: " . $conn->error;
-
+        echo "Error: " . $conn->error;
     }
 
-
-}    
-
+}
 
 
+$sql = "SELECT * FROM `categories` ";
 
-
-
-
-
-
+$result = mysqli_query($conn , $sql);
+$data= mysqli_fetch_all($result , MYSQLI_ASSOC);
+// $row=$data[0];
+// echo "<pre>";
+// print_r($data);
+// echo "<br>";
 ?>
 
 
@@ -101,50 +96,53 @@ if (count($error) == 0) {
 <html lang="en">
 <head>
 <?php   include_once("header.php"); ?>
+  
+
 
 </head>
 <body>
+   <div>
 
-<?php 
+             <a class="button" href="trash.php" >Flash</a>  <a class="button" href="addcategorie.php" >Add Categorie </a>   <a class="button" href="index.php" >ViewProduct </a> 
 
+   </div>
 
-
-
-
-
-?> 
-
+   </div>
 
 <div class="form-container">
-  <h2>Update Product</h2>
+  <h2>Add New Product</h2>
   <form action="" method="POST" enctype="multipart/form-data">
-
-    <input type="hidden" value="<?php echo $row['SL']; ?>">
     <label for="ProductName">Product Name</label>
-    <input type="text" name="ProductName" id="ProductName" value="<?php echo $row['ProductName'] ?>" required>
+    <input type="text" name="ProductName" id="ProductName" required>
 
     <label for="Price">Price ($)</label>
-    <input type="number" name="Price" id="Price" value="<?php echo $row['Price']; ?>" required step="0.01">
+    <input type="number" name="Price" id="Price" required step="0.01">
 
     <label for="SrtD">Short Description</label>
-    <input type="text" name="SrtD" value="<?php echo $row['Shortdescription']; ?>" id="SrtD">
+    <input type="text" name="SrtD" id="SrtD">
 
     <label for="catg">Categories</label>
-    <input type="text" name="catg" value="<?php echo  $row['Categories']; ?>" id="catg">
+    <!-- <input type="text" name="catg" id="catg"> -->
+     <select class="form-select"  name="catg" id="catg" >
+       <?php foreach ( $data as $row ) : ?>
+           <option  value="<?php echo $row['id']; ?>" > <?php echo $row['categorie']; ?> </option>
+      <?php endforeach; ?>
+
+    </select>
+
+    
 
     <label for="fulldesc">Full Description</label>
-    <textarea name="fulldesc" id="fulldesc"  value="" rows="4"><?php echo $row['Fulldescription']; ?></textarea>
+    <textarea name="fulldesc" id="fulldesc" rows="4"></textarea>
 
       <label for="imageUrl">Product Image</label>
-    <input type="file" name="imageUrl" value="<?php echo $row['Image']; ?>" id="imageUrl" >
+    <input type="file" name="imageUrl" id="imageUrl" required>
 
-        <button type="submit">Update Product</button>
-
-
+    <button type="submit">Add Product</button>
+  </form>
 </div>
 
-
-</div>
+<br>
 
   <footer>
 

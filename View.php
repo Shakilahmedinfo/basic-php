@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Add New Product</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/addform.css">
-  <link rel="stylesheet" href="assets/css/productmanagement.css">
+ <?php   include_once("header.php"); ?>
+
  <?php include("config.php"); ?>
 
 </head>
@@ -41,6 +38,13 @@ $row= $data[0];
       </div>
 </div>
 
+
+
+  <footer>
+
+     <?php   include_once("footer.php"); ?>
+
+  </footer>
 
 
 </body>
